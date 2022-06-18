@@ -1,29 +1,35 @@
 ﻿@model shop_mvc.Models.ProductModel
+@{
+    ViewData["Title"] = "Szczegóły";
+}
 
-<div>
-    <h4>ProductModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)$
-        </dd>
-    </dl>
-</div>
+<table class="table align-middle">
+  <thead>
+    <tr>
+      <th scope="col">Produkt</th>
+      <th scope="col">Opis</th>
+      <th scope="col">Zdjęcie</th>
+      <th scope="col">Cena</th>
+      <th scope="col">Ilość</th>
+      <th scope="col">Koszt</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>@Model.Name</td>
+          <td>@Model.Description</td>
+          <td>
+                    @{
+                        string image = @Model.Name + ".png";
+                    }
+              <img src="/img/@image" class="img-thumbnail" />
+          </td>
+          <td>@Model.Price$</td>
+          <td>@Model.Count</td>
+          <td>@(Model.Price * @Model.Count)$</td>
+      </tr>
+  </tbody>
+</table>
 <div>
     @if (User.IsInRole("User") || User.IsInRole("Admin"))
     {
