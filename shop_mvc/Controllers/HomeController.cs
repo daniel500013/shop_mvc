@@ -7,15 +7,19 @@ namespace shop_mvc.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ShopDbContext _shopContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ShopDbContext shopContext)
         {
             _logger = logger;
+            _shopContext = shopContext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var products = await _shopContext.Product.ToListAsync();
+
+            return View(products);
         }
 
         public IActionResult Privacy()

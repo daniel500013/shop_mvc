@@ -38,7 +38,7 @@ namespace shop_mvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(UserModel collection)
         {
-            var user = await context.User.SingleAsync(x => x.Email == collection.Email);
+            var user = await context.User.SingleOrDefaultAsync(x => x.Email == collection.Email);
         
             if (user != null)
             {

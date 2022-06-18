@@ -2,8 +2,14 @@
 }
 
 <ul class="navbar-nav">
-    @if (User.IsInRole("User"))
+    @if (User.IsInRole("User") || User.IsInRole("Admin"))
     {
+        @if (User.IsInRole("Admin"))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-light" asp-controller="Admin" asp-action="Index">Admin</a>
+            </li>   
+        }
         <li class="nav-item">
             <a class="nav-link text-light" asp-controller="Account" asp-action="Register">Koszyk</a>
         </li>

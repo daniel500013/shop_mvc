@@ -1,4 +1,6 @@
-﻿namespace shop_mvc
+﻿using Microsoft.EntityFrameworkCore;
+using shop_mvc.Models;
+namespace shop_mvc
 {
     public class ShopDbContext : DbContext
     {
@@ -20,5 +22,7 @@
                 .Property(x => x.Name)
                 .IsRequired();
         }
+
+        public DbSet<shop_mvc.Models.RoleBase>? RoleBase { get; set; }
     }
 }

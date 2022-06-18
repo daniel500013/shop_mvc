@@ -5,6 +5,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ShopDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings")));
 
+builder.Services.AddDefaultIdentity<IdentityUser>()
+    .AddRoles<IdentityRole>().AddEntityFrameworkStores<ShopDbContext>();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<ProductModel>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -32,17 +34,29 @@
 </div>
 <div class="mt-3 mb-3">
     <h1>OSTATNIE PRODUKTY</h1>
+    @if(User.IsInRole("Admin"))
+    {
+        <a class="btn btn-success" asp-controller="Product" asp-action="Create">Dodaj Produkt</a>
+    }
 </div>
 <div class="text-start">
-    @for (var i = 0; i < 1; i++)
+    @for (var i = 0; i < Model.Count; i++)
     {
-        <div class="text-center border d-inline-block m-2">
-            <img src="~/img/s1.png" alt="s1" class="m-3 d-block" />
-            <span class="d-block">IPhone 11</span>
-            <h4 class="d-block">
-                699.99$
-            </h4>
-        </div>
-    }
+        string image = Model[i].Name + ".png";
 
+        <a class="text-dark text-decoration-none" asp-controller="Product" asp-action="Details" asp-route-id="@Model[i].Id">
+            <div class="text-center border d-inline-block m-2">
+                <img src='~/img/@image' alt="s1" class="m-3 d-block" />
+                <span class="d-block">@Model[i].Name</span>
+                <h4 class="d-block">
+                    @Model[i].Price$
+                </h4>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-success d-inline-block m-2" asp-controller="Product" asp-action="Edit" asp-route-id="@Model[i].Id">Edytuj</a>
+                    <a class="btn btn-danger d-inline-block m-2" asp-controller="Product" asp-action="Delete" asp-route-id="@Model[i].Id">Usuń</a>                    
+                }
+            </div>
+        </a>
+    }
 </div>

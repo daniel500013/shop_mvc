@@ -1,0 +1,40 @@
+﻿@model shop_mvc.Models.ProductModel
+
+<h3>Czy na pewno chcesz usunąć ten produkt?</h3>
+<div>
+    <h4>Produkt: @Html.DisplayFor(model => model.Name)</h4>
+    <hr />
+    <div class="row w-50 d-inline-block">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)$
+        </dd>
+    </div>
+
+    <div class="row w-50 d-inline-block">
+        @{
+            string image = Model.Name + ".png";
+        }
+        <img src="~/img/@image" />
+    </div>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index" asp-controller="Home" class="btn btn-warning">Wróć</a>
+    </form>
+</div>
