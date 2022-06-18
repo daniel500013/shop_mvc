@@ -11,6 +11,8 @@ namespace shop_mvc
 
         public DbSet<UserModel> User { get; set; }
         public DbSet<ProductModel> Product { get; set; }
+        public DbSet<OrderModel> Order { get; set; }
+        public DbSet<BoughtModel> Bought { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,8 +23,16 @@ namespace shop_mvc
             modelBuilder.Entity<ProductModel>()
                 .Property(x => x.Name)
                 .IsRequired();
-        }
 
-        public DbSet<shop_mvc.Models.RoleBase>? RoleBase { get; set; }
+            modelBuilder.Entity<OrderModel>()
+                .Property(x => x.ProductID)
+                .IsRequired();
+
+            modelBuilder.Entity<OrderModel>()
+                .Property(x => x.UserID)
+                .IsRequired();
+
+            modelBuilder.Entity<BoughtModel>();
+        }
     }
 }
