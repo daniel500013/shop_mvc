@@ -1,4 +1,7 @@
 ﻿@model shop_mvc.Models.UserModel
+@{
+    ViewData["Title"] = "Rejestracja";
+}
 
 <h4>Rejestracja</h4>
 <hr />
@@ -18,7 +21,7 @@
             </div>
             <div class="form-group m-3">
                 <label asp-for="Password" class="control-label">Hasło</label>
-                <input asp-for="Password" class="form-control" />
+                <input asp-for="Password" type="password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group m-3">
@@ -48,14 +51,14 @@
             </div>
             <span class="text-danger">@Html.ValidationMessage("InvalidRegister")</span>
             <div class="form-group m-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Zarejestruj się" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-controller="Home" asp-action="Index" class="btn btn-warning m-3">Back to List</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-warning m-3">Wróć</a>
 </div>
 
 @section Scripts {
