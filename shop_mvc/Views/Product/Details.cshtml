@@ -25,9 +25,13 @@
     </dl>
 </div>
 <div>
+    @if (User.IsInRole("User") || User.IsInRole("Admin"))
+    {
+        <a asp-controller="Order" asp-action="Create" asp-route-productID="@Model.Id" asp-route-userID="@User.FindFirst(ClaimTypes.NameIdentifier).Value" class="btn btn-warning">Dodaj do koszyka</a>
+    }
     @if (User.IsInRole("Admin"))
     {
-        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-success">Edit</a><span> | </span> 
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-success">Edytuj</a><span> | </span> 
     }
-    <a asp-controller="Home" asp-action="Index" class="btn btn-warning">Back to List</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-warning">Wróć</a>
 </div>

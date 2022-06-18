@@ -1,15 +1,14 @@
 ﻿namespace shop_mvc.Models
 {
-    public class ProductModel
+    public class OrderModel
     {
         [Key]
         public int Id { get; set; }
         [Required]
-        public string? Name { get; set; }
+        public int ProductID { get; set; }
         [Required]
-        public string? Description { get; set; }
+        public int UserID { get; set; }
         [Required]
-        public decimal Price { get; set; }
         public int Count { get; set; } = 1;
     }
 }
