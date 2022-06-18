@@ -6,15 +6,18 @@ Uproszczony projekt sklepu stworzony przy użyciu Entity Framework Core oraz wzo
 
 # Wymagania
 `` SQL Server >2016``
+<br />
 ``.NET Core 6``
 
 # Domyślne dane logowania
 ### Admin
 `` Login: admin@admin.com``
+<br />
 `` Hasło: user``
 <br />
 ### User
 `` Login: user@user.com``
+<br />
 `` Hasło: user``
 <br />
 
