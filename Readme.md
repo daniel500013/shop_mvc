@@ -13,7 +13,7 @@ Uproszczony projekt sklepu stworzony przy użyciu Entity Framework Core oraz wzo
 ### Admin
 `` Login: admin@admin.com``
 <br />
-`` Hasło: user``
+`` Hasło: admin``
 <br />
 ### User
 `` Login: user@user.com``
