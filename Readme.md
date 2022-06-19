@@ -5,6 +5,9 @@
 # Sklep
 Uproszczony projekt sklepu stworzony przy użyciu Entity Framework Core oraz wzorca MVC
 
+# Problemy
+**Brak autoryzacji**
+
 # Funkcje
 - ``Wyświetlanie listy produktów``
 - ``Dodawanie produktów``
