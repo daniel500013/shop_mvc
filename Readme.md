@@ -35,6 +35,6 @@ Uproszczony projekt sklepu stworzony przy użyciu Entity Framework Core oraz wzo
 ### Konfiguracja
 Aby nie wystąpił błąd przy połączeniu z bazą danych należy podmienić dane potrzebne do połączenia w pliku ``appsettings.json`` przy linij ``9``
 ### Dodawanie 
-Aby dodać baze z migracij użyj polecenia update-database w menadżerze pakietów
+Aby dodać baze z migracji użyj polecenia update-database w menadżerze pakietów
 #### Przykład
 > PM> update-database
