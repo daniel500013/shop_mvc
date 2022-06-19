@@ -1,17 +1,15 @@
 
+
 ![](/git/image.png)
 
 # Sklep
 Uproszczony projekt sklepu stworzony przy użyciu Entity Framework Core oraz wzorca MVC
 
 # Funkcje
-- `` Wyświetlanie listy produktów ``
-<br />
-- `` Dodawanie produktów ``
-<br />
-- `` Edycja produktów ``
-<br />
-- `` Usuwanie produktów ``
+- ``Wyświetlanie listy produktów``
+- ``Dodawanie produktów``
+- ``Edycja produktów``
+- ``Usuwanie produktów``
 
 # Wymagania
 `` SQL Server >2016``
