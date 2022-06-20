@@ -48,8 +48,13 @@
             await context.SaveChangesAsync();
         }
 
-        public async Task OrderProduct(int userID)
+        public async Task OrderProduct(HttpContext httpContext)
         {
+            int userID;
+
+            var userIDString = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            int.TryParse(userIDString, out userID);
+
             var orders = await context.Order
                                 .Where(x => x.UserID == userID)
                                 .ToListAsync();

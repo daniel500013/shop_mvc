@@ -5,6 +5,6 @@
         Task<List<ProductModel>> GetIndexOrderProducts(int id);
         Task CreateProduct(int productID, int userID);
         Task DeleteProduct(int productID, int userID);
-        Task OrderProduct(int userID);
+        Task OrderProduct(HttpContext httpContext);
     }
 }
