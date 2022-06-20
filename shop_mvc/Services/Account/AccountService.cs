@@ -6,14 +6,7 @@ namespace shop_mvc.Services.Account
 {
     public class AccountService
     {
-        private UserModel collection;
-
-        public AccountService(UserModel collection)
-        {
-            this.collection = collection;
-        }
-
-        public async Task<bool> Login(IPasswordHasher<UserModel> passwordHasher, HttpContext httpContext)
+=        public async Task<bool> Login(UserModel collection, IPasswordHasher<UserModel> passwordHasher, HttpContext httpContext)
         {
             using (var context = new ShopDbContext())
             {
@@ -60,7 +53,7 @@ namespace shop_mvc.Services.Account
             }
         }
 
-        public async Task<bool> Register(HttpContext httpContext, IPasswordHasher<UserModel> passwordHasher, ModelStateDictionary ModelState)
+        public async Task<bool> Register(UserModel collection, HttpContext httpContext, IPasswordHasher<UserModel> passwordHasher, ModelStateDictionary ModelState)
         {
             using (var context = new ShopDbContext())
             {

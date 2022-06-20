@@ -39,8 +39,8 @@ namespace shop_mvc.Controllers
         {
             var loginService = await Task.Run(() =>
             {
-                AccountService accountService = new AccountService(collection);
-                return accountService.Login(passwordHasher, HttpContext);
+                AccountService accountService = new AccountService();
+                return accountService.Login(collection, passwordHasher, HttpContext);
             });
             
             if (loginService)
@@ -64,8 +64,8 @@ namespace shop_mvc.Controllers
             {
                 var registerService = await Task.Run(() =>
                 {
-                    var accountService = new AccountService(collection);
-                    return accountService.Register(HttpContext, passwordHasher, ModelState);
+                    var accountService = new AccountService();
+                    return accountService.Register(collection, HttpContext, passwordHasher, ModelState);
                 });
 
                 if (registerService)
