@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using shop_mvc.Services.Account;
 
 namespace shop_mvc.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly ShopDbContext context;
         private IPasswordHasher<UserModel> passwordHasher;
 
-        public AccountController(ShopDbContext _context, IPasswordHasher<UserModel> _passwordHasher)
+        public AccountController(IPasswordHasher<UserModel> _passwordHasher)
         {
-            context = _context;
             passwordHasher = _passwordHasher;
         }
 
@@ -38,46 +37,19 @@ namespace shop_mvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(UserModel collection)
         {
-            var user = await context.User.SingleOrDefaultAsync(x => x.Email == collection.Email);
-        
-            if (user != null)
+            var loginService = await Task.Run(() =>
             {
-                var checkPassword = passwordHasher.VerifyHashedPassword(collection, user.HashPassword, collection.Password);
-
-                if (checkPassword == PasswordVerificationResult.Success)
-                {
-                    var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.NameIdentifier, (context.User.ToList().Count+1).ToString()),
-                        new Claim(ClaimTypes.Email, user.Email),
-                        new Claim(ClaimTypes.Role, user.Role),
-                    };
-
-                    var claimsIdentity = new ClaimsIdentity(
-                        claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                    var authProperties = new AuthenticationProperties
-                    {
-                        ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1),
-                        IsPersistent = false,
-                    };
-
-                    await HttpContext.SignInAsync(
-                        CookieAuthenticationDefaults.AuthenticationScheme,
-                        new ClaimsPrincipal(claimsIdentity),
-                        authProperties);
-
-                    return LocalRedirect("/Home/Index");
-                }
-                else
-                {
-                    ModelState.AddModelError("InvalidLogin", "Podane hasło jest nieprawidłowe");
-                    return View();
-                }
+                AccountService accountService = new AccountService(collection);
+                return accountService.Login(passwordHasher, HttpContext);
+            });
+            
+            if (loginService)
+            {
+                return LocalRedirect("/Home/Index");
             }
             else
             {
-                ModelState.AddModelError("InvalidLogin", "Nie istnieje użytkownik o takim emailu");
+                ModelState.AddModelError("InvalidLogin", "Podane dane są nieprawidłowe");
                 return View();
             }
         }
@@ -90,47 +62,25 @@ namespace shop_mvc.Controllers
             ModelState.ClearValidationState(nameof(collection));
             if (!TryValidateModel(collection, nameof(collection)))
             {
-                var CheckEmailDuplicate = await context.User.FirstOrDefaultAsync(x => x.Email == collection.Email);
-
-                if (CheckEmailDuplicate != null)
+                var registerService = await Task.Run(() =>
                 {
-                    ModelState.AddModelError("InvalidRegister", "Podany email został już wykorzystany");
+                    var accountService = new AccountService(collection);
+                    return accountService.Register(HttpContext, passwordHasher, ModelState);
+                });
+
+                if (registerService)
+                {
+                    return LocalRedirect("/Home/Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("InvalidRegister", "Podany email już istnieje!");
                     return View();
                 }
-
-                var passwordHash = passwordHasher.HashPassword(collection, collection.Password);
-
-                collection.HashPassword = passwordHash;
-
-                await context.AddAsync(collection);
-                await context.SaveChangesAsync();
-
-                var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.NameIdentifier, (context.User.ToList().Count+1).ToString()),
-                        new Claim(ClaimTypes.Email, collection.Email),
-                        new Claim(ClaimTypes.Role, collection.Role),
-                    };
-
-                var claimsIdentity = new ClaimsIdentity(
-                    claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                var authProperties = new AuthenticationProperties
-                {
-                    ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1),
-                    IsPersistent = false,
-                };
-
-                await HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity),
-                    authProperties);
-
-                return LocalRedirect("/Home/Index");
             }
             else
             {
-                ModelState.AddModelError("InvalidRegister", "Podane dane są niepoprawne sprawdź je przed rejestracją");
+                ModelState.AddModelError("InvalidRegister", "Podane dane są nieprawidłowe!");
                 return View();
             }
         }

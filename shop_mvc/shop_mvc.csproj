@@ -32,4 +32,8 @@
     <Using Include="Microsoft.AspNetCore.Identity" />
     <Using Include="Microsoft.AspNetCore.Authorization" />
   </ItemGroup>
+
+   <ItemGroup>
+     <Folder Include="ViewModel\" />
+   </ItemGroup>
 </Project>
