@@ -6,11 +6,13 @@ namespace shop_mvc.Controllers
 {
     public class AccountController : Controller
     {
+        private IAccountService accountService;
         private IPasswordHasher<UserModel> passwordHasher;
 
-        public AccountController(IPasswordHasher<UserModel> _passwordHasher)
+        public AccountController(IPasswordHasher<UserModel> _passwordHasher, IAccountService accountService)
         {
             passwordHasher = _passwordHasher;
+            this.accountService = accountService;
         }
 
         // GET: Login
@@ -37,12 +39,8 @@ namespace shop_mvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(UserModel collection)
         {
-            var loginService = await Task.Run(() =>
-            {
-                AccountService accountService = new AccountService();
-                return accountService.Login(collection, passwordHasher, HttpContext);
-            });
-            
+            var loginService = await accountService.Login(collection, passwordHasher, HttpContext);
+
             if (loginService)
             {
                 return LocalRedirect("/Home/Index");
@@ -62,11 +60,7 @@ namespace shop_mvc.Controllers
             ModelState.ClearValidationState(nameof(collection));
             if (!TryValidateModel(collection, nameof(collection)))
             {
-                var registerService = await Task.Run(() =>
-                {
-                    var accountService = new AccountService();
-                    return accountService.Register(collection, HttpContext, passwordHasher, ModelState);
-                });
+                var registerService = await accountService.Register(collection, HttpContext, passwordHasher, ModelState);
 
                 if (registerService)
                 {
