@@ -2,8 +2,8 @@ using shop_mvc.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ShopDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings")));
+//builder.Services.AddDbContext<ShopDbContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
