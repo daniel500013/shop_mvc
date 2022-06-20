@@ -6,7 +6,7 @@ namespace shop_mvc.Services.Account
 {
     public class AccountService
     {
-=        public async Task<bool> Login(UserModel collection, IPasswordHasher<UserModel> passwordHasher, HttpContext httpContext)
+        public async Task<bool> Login(UserModel collection, IPasswordHasher<UserModel> passwordHasher, HttpContext httpContext)
         {
             using (var context = new ShopDbContext())
             {
