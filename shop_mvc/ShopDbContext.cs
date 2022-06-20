@@ -6,15 +6,21 @@ namespace shop_mvc
 {
     public class ShopDbContext : DbContext
     {
+        public ShopDbContext(DbContextOptions<ShopDbContext> options) : base(options)
+        {
+
+        }
+
         public DbSet<UserModel> User { get; set; }
         public DbSet<ProductModel> Product { get; set; }
         public DbSet<OrderModel> Order { get; set; }
         public DbSet<BoughtModel> Bought { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Data Source=192.168.0.15;Database=ShopDb;Persist Security Info=True;User ID=SA;Password=YHoZ8olz");
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Data Source=192.168.0.15;Database=ShopDb;Persist Security Info=True;User ID=SA;Password=YHoZ8olz");
+        //}
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserModel>()
