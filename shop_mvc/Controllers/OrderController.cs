@@ -36,9 +36,9 @@ namespace shop_mvc.Controllers
         }
 
         // GET /OrderController/Order
-        public async Task<IActionResult> Order(int userID)
+        public async Task<IActionResult> Order()
         {
-            await orderService.OrderProduct(userID);
+            await orderService.OrderProduct(HttpContext);
 
             return LocalRedirect("/Home/Index");
         }
