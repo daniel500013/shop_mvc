@@ -5,19 +5,16 @@ namespace shop_mvc.Controllers
 {
     public class OrderController : Controller
     {
-        public OrderController()
+        private IOrderService orderService;
+        public OrderController(IOrderService orderService)
         {
-            
+            this.orderService = orderService;
         }
 
         // GET /OrderController/Index
         public async Task<IActionResult> Index(int id)
         {
-            var products = await Task.Run(() =>
-            {
-                var orderService = new OrderService();
-                return orderService.GetIndexOrderProducts(id);
-            });
+            var products = await orderService.GetIndexOrderProducts(id);
 
             return View(products);
         }
@@ -25,11 +22,7 @@ namespace shop_mvc.Controllers
         // GET /OrderController/Create
         public async Task<IActionResult> Create(int productID, int userID)
         {
-            await Task.Run(() =>
-            {
-                var orderService = new OrderService();
-                return orderService.CreateProduct(productID, userID);
-            });
+            await orderService.CreateProduct(productID, userID);
 
             return RedirectToAction("Index", new { id = userID });
         }
@@ -37,11 +30,7 @@ namespace shop_mvc.Controllers
         // GET /OrderController/Create
         public async Task<IActionResult> Delete (int productID, int userID)
         {
-            await Task.Run(() =>
-            {
-                var orderService = new OrderService();
-                return orderService.DeleteProduct(productID, userID);
-            });
+            await orderService.DeleteProduct(productID, userID);
 
             return RedirectToAction("Index", new { id = userID });
         }
@@ -49,11 +38,7 @@ namespace shop_mvc.Controllers
         // GET /OrderController/Order
         public async Task<IActionResult> Order(int userID)
         {
-            await Task.Run(() =>
-            {
-                var orderService = new OrderService();
-                return orderService.OrderProduct(userID);
-            });
+            await orderService.OrderProduct(userID);
 
             return LocalRedirect("/Home/Index");
         }

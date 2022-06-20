@@ -1,9 +1,14 @@
 using shop_mvc.Controllers;
+using shop_mvc.Logic.Home;
+using shop_mvc.Services.Account;
+using shop_mvc.Services.Home;
+using shop_mvc.Services.Order;
+using shop_mvc.Services.Product;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Services.AddDbContext<ShopDbContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings")));
+builder.Services.AddDbContext<ShopDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -11,6 +16,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie();
 
+builder.Services.AddScoped<IHomeService, HomeService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IPasswordHasher<UserModel>, PasswordHasher<UserModel>>();
 
 var app = builder.Build();

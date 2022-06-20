@@ -6,9 +6,10 @@ namespace shop_mvc.Controllers
 {
     public class ProductController : Controller
     {
-        public ProductController()
+        private IProductService productService;
+        public ProductController(IProductService productService)
         {
-            
+            this.productService = productService;
         }
 
         // GET: ProductController
@@ -20,11 +21,7 @@ namespace shop_mvc.Controllers
         // GET: ProductController/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var product = await Task.Run(() =>
-            {
-                var productService = new ProductService();
-                return productService.GetProduct(id);
-            });
+            var product = await productService.GetProduct(id);
 
             return View(product);
         }
@@ -42,11 +39,7 @@ namespace shop_mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                await Task.Run(() =>
-                {
-                    var productService = new ProductService();
-                    return productService.CreateProduct(collection);
-                });
+                await productService.CreateProduct(collection);
 
                 return LocalRedirect("/Home/Index");
             }
@@ -59,11 +52,7 @@ namespace shop_mvc.Controllers
         //// GET: ProductController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            var product = await Task.Run(() =>
-            {
-                var productService = new ProductService();
-                return productService.GetEditProduct(id);
-            });
+            var product = await productService.GetEditProduct(id);
 
             return View(product);
         }
@@ -75,11 +64,7 @@ namespace shop_mvc.Controllers
         {
             if (ModelState.IsValid)
             {
-                await Task.Run(() =>
-                {
-                    var productService = new ProductService();
-                    return productService.PostEditProduct(id, collection);
-                });
+                await productService.PostEditProduct(id, collection);
 
                 return LocalRedirect("/Home/Index");
             }
@@ -92,11 +77,7 @@ namespace shop_mvc.Controllers
         //// GET: ProductController/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            var product = await Task.Run(() =>
-            {
-                var productService = new ProductService();
-                return productService.GetDeleteProduct(id);
-            });
+            var product = await productService.GetDeleteProduct(id);
 
             return View(product);
         }
@@ -106,11 +87,7 @@ namespace shop_mvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(int id, ProductModel collection)
         {
-            var isDeleted = await Task.Run(() =>
-            {
-                var productService = new ProductService();
-                return productService.PostDeleteProduct(id, collection);
-            });
+            var isDeleted = await productService.PostDeleteProduct(id, collection);
 
             if (isDeleted)
             {
