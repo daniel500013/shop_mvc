@@ -5,8 +5,8 @@ namespace shop_mvc.Controllers
 {
     public class OrderController : Controller
     {
-        private IOrderService orderService;
-        public OrderController(IOrderService orderService)
+        private OrderService orderService;
+        public OrderController(OrderService orderService)
         {
             this.orderService = orderService;
         }

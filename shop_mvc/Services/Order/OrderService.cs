@@ -1,6 +1,6 @@
 ﻿namespace shop_mvc.Services.Order
 {
-    public class OrderService : IOrderService
+    public class OrderService
     {
         private ShopDbContext context;
         public OrderService(ShopDbContext context)

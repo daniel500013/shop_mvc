@@ -6,10 +6,10 @@ namespace shop_mvc.Controllers
 {
     public class AccountController : Controller
     {
-        private IAccountService accountService;
+        private AccountService accountService;
         private IPasswordHasher<UserModel> passwordHasher;
 
-        public AccountController(IPasswordHasher<UserModel> _passwordHasher, IAccountService accountService)
+        public AccountController(IPasswordHasher<UserModel> _passwordHasher, AccountService accountService)
         {
             passwordHasher = _passwordHasher;
             this.accountService = accountService;

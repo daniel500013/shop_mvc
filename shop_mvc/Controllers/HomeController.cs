@@ -8,10 +8,10 @@ namespace shop_mvc.Controllers
 {
     public class HomeController : Controller
     {
-        private IHomeService homeService;
+        private HomeService homeService;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, IHomeService homeService)
+        public HomeController(ILogger<HomeController> logger, HomeService homeService)
         {
             _logger = logger;
             this.homeService = homeService;
