@@ -6,6 +6,7 @@ namespace shop_mvc.Controllers
     public class OrderController : Controller
     {
         private OrderService orderService;
+
         public OrderController(OrderService orderService)
         {
             this.orderService = orderService;
@@ -14,7 +15,7 @@ namespace shop_mvc.Controllers
         // GET /OrderController/Index
         public async Task<IActionResult> Index(int id)
         {
-            var products = await orderService.GetIndexOrderProducts(id);
+            var products = await orderService.GetIndexOrderProducts();
 
             return View(products);
         }
@@ -22,7 +23,7 @@ namespace shop_mvc.Controllers
         // GET /OrderController/Create
         public async Task<IActionResult> Create(int productID, int userID)
         {
-            await orderService.CreateProduct(productID, userID);
+            await orderService.CreateProduct(productID);
 
             return RedirectToAction("Index", new { id = userID });
         }
@@ -30,7 +31,7 @@ namespace shop_mvc.Controllers
         // GET /OrderController/Create
         public async Task<IActionResult> Delete (int productID, int userID)
         {
-            await orderService.DeleteProduct(productID, userID);
+            await orderService.DeleteProduct(productID);
 
             return RedirectToAction("Index", new { id = userID });
         }
@@ -38,7 +39,7 @@ namespace shop_mvc.Controllers
         // GET /OrderController/Order
         public async Task<IActionResult> Order()
         {
-            await orderService.OrderProduct(HttpContext);
+            await orderService.OrderProduct();
 
             return LocalRedirect("/Home/Index");
         }

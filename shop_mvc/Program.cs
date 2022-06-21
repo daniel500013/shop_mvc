@@ -13,6 +13,8 @@ builder.Services.AddDbContext<ShopDbContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie();
 
@@ -20,6 +22,7 @@ builder.Services.AddScoped<HomeService>();
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<UserContext>();
 builder.Services.AddScoped<IPasswordHasher<UserModel>, PasswordHasher<UserModel>>();
 
 var app = builder.Build();
