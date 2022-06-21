@@ -1,6 +1,6 @@
 ﻿namespace shop_mvc.Services.Product
 {
-    public class ProductService : IProductService
+    public class ProductService
     {
         private ShopDbContext context;
 

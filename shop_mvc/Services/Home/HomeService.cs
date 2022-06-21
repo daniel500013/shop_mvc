@@ -2,7 +2,7 @@
 
 namespace shop_mvc.Logic.Home
 {
-    public class HomeService : IHomeService
+    public class HomeService
     {
         private readonly ShopDbContext context;
 

@@ -6,8 +6,8 @@ namespace shop_mvc.Controllers
 {
     public class ProductController : Controller
     {
-        private IProductService productService;
-        public ProductController(IProductService productService)
+        private ProductService productService;
+        public ProductController(ProductService productService)
         {
             this.productService = productService;
         }

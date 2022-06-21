@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace shop_mvc.Services.Account
 {
-    public class AccountService : IAccountService
+    public class AccountService
     {
         private readonly ShopDbContext context;
 
