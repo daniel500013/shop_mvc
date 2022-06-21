@@ -3,13 +3,18 @@
     public class OrderService
     {
         private ShopDbContext context;
-        public OrderService(ShopDbContext context)
+        private UserContext userContext;
+
+        public OrderService(ShopDbContext context, UserContext userContext)
         {
             this.context = context;
+            this.userContext = userContext;
         }
 
-        public async Task<List<ProductModel>> GetIndexOrderProducts(int id)
+        public async Task<List<ProductModel>> GetIndexOrderProducts()
         {
+            var id = userContext.UserId;
+
             var orderProductID = await context.Order.Where(x => x.UserID == id)
                 .Select(p => new { p.ProductID, p.Count, p.Id })
                 .ToListAsync();
@@ -28,8 +33,10 @@
             return products;
         }
 
-        public async Task CreateProduct(int productID, int userID)
+        public async Task CreateProduct(int productID)
         {
+            var userID = userContext.UserId;
+
             if (productID != 0 && userID != 0)
             {
                 await context.AddAsync(new OrderModel { ProductID = productID, UserID = userID });
@@ -37,8 +44,10 @@
             }
         }
 
-        public async Task DeleteProduct(int productID, int userID)
+        public async Task DeleteProduct(int productID)
         {
+            var userID = userContext.UserId;
+
             var order = await context.Order
                                 .Where(x => x.UserID == userID)
                                 .Where(p => p.Id == productID)
@@ -48,12 +57,9 @@
             await context.SaveChangesAsync();
         }
 
-        public async Task OrderProduct(HttpContext httpContext)
+        public async Task OrderProduct()
         {
-            int userID;
-
-            var userIDString = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            int.TryParse(userIDString, out userID);
+            var userID = userContext.UserId;
 
             var orders = await context.Order
                                 .Where(x => x.UserID == userID)
