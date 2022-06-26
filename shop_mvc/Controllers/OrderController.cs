@@ -3,6 +3,7 @@ using shop_mvc.Services.Order;
 
 namespace shop_mvc.Controllers
 {
+    [Authorize(Roles = "User")]
     public class OrderController : Controller
     {
         private OrderService orderService;

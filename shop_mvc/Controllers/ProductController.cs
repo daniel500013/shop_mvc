@@ -4,6 +4,7 @@ using shop_mvc.Services.Product;
 
 namespace shop_mvc.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
         private ProductService productService;
@@ -13,12 +14,14 @@ namespace shop_mvc.Controllers
         }
 
         // GET: ProductController
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();
         }
 
         // GET: ProductController/Details/5
+        [AllowAnonymous]
         public async Task<ActionResult> Details(int id)
         {
             var product = await productService.GetProduct(id);
