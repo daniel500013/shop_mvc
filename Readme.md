@@ -10,6 +10,7 @@ Uproszczony projekt sklepu stworzony przy użyciu Entity Framework Core oraz wzo
 - ``Dodawanie produktów``
 - ``Edycja produktów``
 - ``Usuwanie produktów``
+- ``Autoryzacja użytkowników``
 
 # Wymagania
 `` SQL Server >2016``
